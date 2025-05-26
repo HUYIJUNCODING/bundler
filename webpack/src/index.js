@@ -1,3 +1,3 @@
-import hello, { b } from './hello.js'
-hello()
-console.log('index.js')
+import { cube } from './math.js';
+
+console.log(cube(5));
