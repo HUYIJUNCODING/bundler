@@ -1,8 +1,12 @@
 export function square(x) {
-  return x * x;
+    return x * x;
 }
-​
+
 export function cube(x) {
-  return x * x * x;
+    return x * x * x;
 }
-console.log(square(10));
+function test() {
+    return square(10)
+}
+
+/*#__PURE__*/ console.log(test())
