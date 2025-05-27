@@ -5,8 +5,8 @@ export function square(x) {
 export function cube(x) {
     return x * x * x;
 }
-function test() {
-    return square(10)
+console.log()
+export default {
+    square,
+    cube
 }
-
-/*#__PURE__*/ console.log(test())

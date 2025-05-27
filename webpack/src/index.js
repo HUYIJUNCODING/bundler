@@ -1,3 +1,2 @@
 import { cube } from './math.js';
-
-console.log(cube(5));
+consol.log(cube(5));

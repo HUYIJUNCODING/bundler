@@ -1,61 +1,47 @@
 const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin =  require('html-webpack-plugin')
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
         chunkFilename: '[name].js',
         clean: true
-        // module: true,
-        // library: {
-        //     type: 'module',            // 以 ESM 形式导出 library
-        // }
 
     },
-    // experiments: {
-    //     outputModule: true
-    // },
+    devtool: 'inline-source-map',
+    module: {
+        rules: [
+            {
+                test: '/\.css$/',
+                use: 'css-loader'
+            }
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './index.html',
+            filename: 'app.html'
+        })
+    ],
     optimization: {
         usedExports: true, // webpack 编译过程中标记模块中被导出但没有被使用的内容为unused,当生成产物时，被标记的变量对应的导出语句会被删除
         minimize: true,
-        // minimizer: [
-        //     new TerserPlugin(
-        //         {
-        //             terserOptions: {
-        //                 compress: {
-        //                     arrows: false,
-        //                     collapse_vars: false,
-        //                     comparisons: false,
-        //                     computed_props: false,
-        //                     hoist_funs: false,
-        //                     hoist_props: false,
-        //                     hoist_vars: false,
-        //                     inline: false,
-        //                     loops: false,
-        //                     negate_iife: false,
-        //                     properties: false,
-        //                     reduce_funcs: false,
-        //                     reduce_vars: false,
-        //                     switches: false,
-        //                     toplevel: false,
-        //                     typeofs: false,
-        //                     booleans: true,
-        //                     if_return: true,
-        //                     sequences: true,
-        //                     unused: true,
-        //                     conditionals: true,
-        //                     dead_code: true,
-        //                     evaluate: true
-        //                 },
-        //                 mangle: {
-        //                     safari10: true
-        //                 }
-        //             },
-        //             parallel: true,
-        //             extractComments: false
-        //         }
-        //     )]
+        minimizer: [
+            new TerserPlugin(
+                {
+                    terserOptions: {
+                        compress: {
+                            unused: true, // 删除未使用代码
+                            dead_code: true // 删除死代码
+                        }
+                    },
+                    parallel: true,
+                    extractComments: false
+                }
+            )]
     }
 }
