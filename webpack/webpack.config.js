@@ -1,6 +1,8 @@
 const path = require('path')
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = {
     // watch: true, // 开启后，会时时监听本地文件的修改，当有修改会自动编译
@@ -18,11 +20,11 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
                 test: /\.less$/,
-                use: ['style-loader', 'css-loader', 'less-loader']
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
             }
         ]
     },
@@ -30,13 +32,17 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './public/index.html',
             filename: 'index.html'
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].[contenthash:8].css',
+            chunkFilename: 'css/[name].[contenthash:8].css'
         })
     ],
     devServer: {
     },
     optimization: {
         usedExports: true, // webpack 编译过程中标记模块中被导出但没有被使用的内容为unused,当生成产物时，被标记的变量对应的导出语句会被删除
-        minimize: true,
+        // minimize: true,
         minimizer: [
             new TerserPlugin(
                 {
@@ -49,6 +55,8 @@ module.exports = {
                     parallel: true,
                     extractComments: false
                 }
-            )]
+            ),
+            new CssMinimizerPlugin()
+        ],
     }
 }
