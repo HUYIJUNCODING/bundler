@@ -1,8 +1,9 @@
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin');
-const HtmlWebpackPlugin =  require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+    // watch: true, // 开启后，会时时监听本地文件的修改，当有修改会自动编译
     mode: 'development',
     entry: './src/index.js',
     output: {
@@ -27,6 +28,9 @@ module.exports = {
             filename: 'app.html'
         })
     ],
+    devServer: {
+        static: './dist'
+    },
     optimization: {
         usedExports: true, // webpack 编译过程中标记模块中被导出但没有被使用的内容为unused,当生成产物时，被标记的变量对应的导出语句会被删除
         minimize: true,
