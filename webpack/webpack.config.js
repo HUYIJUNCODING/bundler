@@ -17,19 +17,22 @@ module.exports = {
     module: {
         rules: [
             {
-                test: '/\.css$/',
-                use: 'css-loader'
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.less$/,
+                use: ['style-loader', 'css-loader', 'less-loader']
             }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './index.html',
-            filename: 'app.html'
+            template: './public/index.html',
+            filename: 'index.html'
         })
     ],
     devServer: {
-        static: './dist'
     },
     optimization: {
         usedExports: true, // webpack 编译过程中标记模块中被导出但没有被使用的内容为unused,当生成产物时，被标记的变量对应的导出语句会被删除
