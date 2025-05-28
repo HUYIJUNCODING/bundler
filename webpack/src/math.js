@@ -1,11 +1,19 @@
+function getString(x) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('str:' + x)
+        }, 2000)
+    })
+}
+
 export function square(x) {
     return x * x;
 }
 
-export function cube(x) {
+export const cube = async (x) => {
+    await getString(x)
     return x * x * x;
 }
-console.log()
 export default {
     square,
     cube

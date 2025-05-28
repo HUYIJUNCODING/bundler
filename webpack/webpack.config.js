@@ -15,6 +15,7 @@ module.exports = {
         clean: true
 
     },
+    // target: ['web', 'es5'],
     devtool: 'inline-source-map',
     module: {
         rules: [
@@ -25,6 +26,16 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
             }
         ]
     },
