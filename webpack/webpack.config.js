@@ -3,19 +3,22 @@ const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     // watch: true, // 开启后，会时时监听本地文件的修改，当有修改会自动编译
     mode: 'development',
-    entry: './src/index.js',
+    entry: {
+        index: './src/index.js',
+        main: './src/math.js'
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js',
-        chunkFilename: '[name].js',
+        filename: 'js/[name].js',
+        chunkFilename: 'js/[name].js',
         clean: true
 
     },
-    // target: ['web', 'es5'],
     devtool: 'inline-source-map',
     module: {
         rules: [
@@ -47,7 +50,8 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'css/[name].[contenthash:8].css',
             chunkFilename: 'css/[name].[contenthash:8].css'
-        })
+        }),
+        // new BundleAnalyzerPlugin()
     ],
     devServer: {
     },
@@ -69,5 +73,24 @@ module.exports = {
             ),
             new CssMinimizerPlugin()
         ],
+        splitChunks: {
+            cacheGroups: {
+                defaultVendors: {
+                    name: 'chunk-vendors',
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    chunks: 'initial'
+
+                },
+                common: {
+                    name: 'chunk-common',
+                    minChunks: 2,
+                    priority: -12,
+                    chunks: 'initial',
+                    reuseExistingChunk: true
+                }
+            }
+
+        }
     }
 }
