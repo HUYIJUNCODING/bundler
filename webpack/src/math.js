@@ -10,7 +10,7 @@ function getString(x) {
 }
 
 export function square(x) {
-    return x * x;
+    return x * x * x;
 }
 
 export const cube = async (x) => {

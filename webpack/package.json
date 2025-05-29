@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "webpack serve",
     "build": "webpack --mode production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src --fix",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -14,10 +15,15 @@
   "devDependencies": {
     "@babel/core": "^7.27.3",
     "@babel/preset-env": "^7.27.2",
+    "@eslint/js": "^9.27.0",
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
+    "eslint": "^9.27.0",
+    "eslint-webpack-plugin": "^5.0.1",
+    "globals": "^16.2.0",
     "html-webpack-plugin": "^5.6.3",
+    "husky": "^9.1.7",
     "less-loader": "^12.3.0",
     "mini-css-extract-plugin": "^2.9.2",
     "terser-webpack-plugin": "^5.3.14",

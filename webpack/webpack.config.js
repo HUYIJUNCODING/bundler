@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ESLintPlugin = require('eslint-webpack-plugin');
+
 
 module.exports = {
     // watch: true, // 开启后，会时时监听本地文件的修改，当有修改会自动编译
@@ -14,6 +16,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
         filename: 'js/[name].js',
         chunkFilename: 'js/[name].js',
         clean: true
@@ -51,6 +54,12 @@ module.exports = {
             filename: 'css/[name].[contenthash:8].css',
             chunkFilename: 'css/[name].[contenthash:8].css'
         }),
+        new ESLintPlugin({
+            context: './src',
+            extensions: ['js', 'jsx', 'ts'],
+            // fix: true,
+            failOnError: false
+        })
         // new BundleAnalyzerPlugin()
     ],
     devServer: {
